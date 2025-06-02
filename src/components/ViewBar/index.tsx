@@ -14,13 +14,13 @@ const ViewBar = ({
   setItemsPerPage,
 }: ViewBarProps) => {
   return (
-    <div className="bg-gray-100 px-4 py-2 flex items-center justify-end text-sm gap-[43px]">
+    <div className="bg-[#F2F3F8] px-4 py-2 flex items-center justify-end text-sm gap-[43px]">
       <div className="flex items-center gap-2">
         <span>Exibir</span>
         <select
           value={itemsPerPage}
           onChange={(e) => setItemsPerPage(Number(e.target.value))}
-          className="border border-gray-300 rounded px-2 py-1 text-sm focus:outline-none cursor-pointer"
+          className="border border-[#F2F3F8 ] rounded px-2 py-1 text-sm focus:outline-none cursor-pointer"
         >
           {[5, 10, 15, 20].map((n) => (
             <option key={n} value={n}>

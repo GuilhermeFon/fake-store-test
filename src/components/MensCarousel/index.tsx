@@ -1,11 +1,13 @@
 import {useMemo} from "react";
 import type {Product} from "../../types/Product";
+import {useNavigate} from "react-router-dom";
 
 type MensCarouselProps = {
   products: Product[];
 };
 
 const MensCarousel = ({products}: MensCarouselProps) => {
+  const navigate = useNavigate();
   const mensProducts = useMemo(
     () => products.filter((item) => item.category === "men's clothing"),
     [products]
@@ -26,7 +28,11 @@ const MensCarousel = ({products}: MensCarouselProps) => {
         {mensProducts.map((item, index) => {
           const discountPrice = (item.price * 0.9).toFixed(2).replace(".", ",");
           return (
-            <div key={index} className="text-center p-3 rounded">
+            <div
+              key={index}
+              className="text-center p-3 rounded cursor-pointer"
+              onClick={() => navigate(`/produto/${item.id}`)}
+            >
               <div className="flex">
                 <div className="border border-[#0B1A8E] w-[101px] h-[108px] rounded-2xl content-center place-items-center">
                   <img src={item.image} alt="" className="max-h-[91px]" />
@@ -39,13 +45,13 @@ const MensCarousel = ({products}: MensCarouselProps) => {
                     </div>
                   </div>
                   <div>
-                    <p className="font-bold text-lg line-through">
+                    <p className="font-bold text-xs sm:text-lg line-through">
                       DE: R${" "}
                       <span className="font-normal">
                         {item.price.toFixed(2).replace(".", ",")}
                       </span>
                     </p>
-                    <p className="font-bold text-lg">
+                    <p className="font-bold text-xs sm:text-lg">
                       POR: R${" "}
                       <span className="font-normal">{discountPrice}</span>
                     </p>

@@ -2,6 +2,7 @@ import type {Product} from "../../types/Product";
 import CardGridItem from "./components/CardGridIem";
 import CardListItem from "./components/CardListItem";
 import {useMemo, useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 type ProductListProps = {
   products: Product[];
@@ -11,6 +12,7 @@ type ProductListProps = {
 
 const ProductsList = ({products, viewMode, itemsPerPage}: ProductListProps) => {
   const [page, setPage] = useState(1);
+  const navigate = useNavigate();
 
   const filteredProducts = useMemo(
     () => products.filter((item) => item.category !== "men's clothing"),
@@ -35,9 +37,21 @@ const ProductsList = ({products, viewMode, itemsPerPage}: ProductListProps) => {
       >
         {paginatedProducts.map((item, index) =>
           viewMode === "list" ? (
-            <CardListItem key={index} product={item} />
+            <div
+              key={index}
+              onClick={() => navigate(`/produto/${item.id}`)}
+              className="cursor-pointer"
+            >
+              <CardListItem product={item} />
+            </div>
           ) : (
-            <CardGridItem key={index} product={item} />
+            <div
+              key={index}
+              onClick={() => navigate(`/produto/${item.id}`)}
+              className="cursor-pointer"
+            >
+              <CardGridItem product={item} />
+            </div>
           )
         )}
       </div>
