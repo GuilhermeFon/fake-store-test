@@ -4,9 +4,10 @@ import CartImage from "../../assets/images/cart.png";
 
 type HeaderProps = {
   onSearch?: (term: string) => void;
+  onCartClick?: () => void;
 };
 
-const Header = ({onSearch}: HeaderProps) => {
+const Header = ({onSearch, onCartClick}: HeaderProps) => {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
@@ -24,9 +25,13 @@ const Header = ({onSearch}: HeaderProps) => {
           <a href="/" className="font-bold text-2xl sm:text-[32px]">
             <h1 className="text-white">Bloom Store</h1>
           </a>
-          <a href="#" className="md:hidden block text-white">
+          <button
+            type="button"
+            onClick={onCartClick}
+            className="md:hidden block text-white cursor-pointer"
+          >
             <img src={CartImage} alt="Carrinho" className="w-6 h-6" />
-          </a>
+          </button>
         </div>
 
         {onSearch && (
@@ -51,9 +56,13 @@ const Header = ({onSearch}: HeaderProps) => {
           </form>
         )}
 
-        <a href="#" className="hidden md:flex items-center text-white">
+        <button
+          type="button"
+          onClick={onCartClick}
+          className="hidden md:flex items-center text-white cursor-pointer"
+        >
           <img src={CartImage} alt="Carrinho" className="w-6 h-6" />
-        </a>
+        </button>
       </div>
     </header>
   );

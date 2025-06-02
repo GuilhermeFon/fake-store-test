@@ -5,12 +5,14 @@ import api from "../services/api";
 import ProductsList from "../components/ProductsList";
 import ViewBar from "../components/ViewBar";
 import type {Product} from "../types/Product";
+import CartDrawer from "../components/CartDrawer";
 
 function Home() {
   const [products, setProducts] = useState<Product[]>([]);
   const [viewMode, setViewMode] = useState<"list" | "grid">("list");
   const [itemsPerPage, setItemsPerPage] = useState(5);
   const [searchTerm, setSearchTerm] = useState("");
+  const [cartOpen, setCartOpen] = useState(false);
 
   useEffect(() => {
     api
@@ -27,7 +29,8 @@ function Home() {
 
   return (
     <>
-      <Header onSearch={setSearchTerm} />
+      <CartDrawer isOpen={cartOpen} onClose={() => setCartOpen(false)} />
+      <Header onSearch={setSearchTerm} onCartClick={() => setCartOpen(true)} />
       <ViewBar
         viewMode={viewMode}
         setViewMode={setViewMode}

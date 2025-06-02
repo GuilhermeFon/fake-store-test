@@ -4,11 +4,15 @@ import type {Product} from "../types/Product";
 import api from "../services/api";
 import CartImage from "../assets/images/cart.png";
 import Header from "../components/Header";
+import CartDrawer from "../components/CartDrawer";
+import {useCart} from "../store/cart";
 
 const ProductDetail = () => {
   const {id} = useParams<{id: string}>();
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
+  const [cartOpen, setCartOpen] = useState(false);
+  const {add} = useCart();
 
   useEffect(() => {
     setLoading(true);
@@ -25,6 +29,12 @@ const ProductDetail = () => {
       });
   }, [id]);
 
+  const addToCart = () => {
+    if (!product) return;
+    add(product);
+    setCartOpen(true);
+  };
+
   if (loading) return <div className="text-center py-10">Carregando...</div>;
   if (!product) return null;
 
@@ -32,6 +42,7 @@ const ProductDetail = () => {
 
   return (
     <>
+      <CartDrawer isOpen={cartOpen} onClose={() => setCartOpen(false)} />
       <Header />
       <div className="h-12 bg-[#F2F3F8] flex items-center">
         <div className="container mx-auto px-4">
@@ -60,7 +71,10 @@ const ProductDetail = () => {
                       {product.price.toFixed(2).replace(".", ",")}
                     </span>
                   </span>
-                  <button className="bg-[#0B1A8E] flex items-center justify-center gap-1 text-white px-4 py-2 rounded-[10px] font-bold h-[38px] text-[15px]">
+                  <button
+                    className="bg-[#0B1A8E] flex items-center justify-center gap-1 text-white px-4 py-2 rounded-[10px] font-bold h-[38px] text-[15px] cursor-pointer"
+                    onClick={addToCart}
+                  >
                     <img
                       src={CartImage}
                       alt="Carrinho"
@@ -83,7 +97,10 @@ const ProductDetail = () => {
                   <span className="text-[40px] font-normal leading-none mb-2">
                     {product.price.toFixed(2).replace(".", ",")}
                   </span>
-                  <button className="bg-[#0B1A8E] flex items-center justify-center gap-1 text-white px-3 py-1 rounded font-bold text-[15px] w-full">
+                  <button
+                    className="bg-[#0B1A8E] flex items-center justify-center gap-1 text-white px-3 py-1 rounded font-bold text-[15px] w-full cursor-pointer"
+                    onClick={addToCart}
+                  >
                     <img
                       src={CartImage}
                       alt="Carrinho"
@@ -131,7 +148,10 @@ const ProductDetail = () => {
                       {product.price.toFixed(2).replace(".", ",")}
                     </span>
                   </span>
-                  <button className="bg-[#0B1A8E] flex items-center justify-center gap-1 text-white px-4 py-2 rounded-[10px] font-bold h-[55px] text-2xl">
+                  <button
+                    className="bg-[#0B1A8E] flex items-center justify-center gap-1 text-white px-4 py-2 rounded-[10px] font-bold h-[55px] text-2xl cursor-pointer"
+                    onClick={addToCart}
+                  >
                     <img
                       src={CartImage}
                       alt="Carrinho"
@@ -154,7 +174,10 @@ const ProductDetail = () => {
                   <span className="text-[64px] font-normal leading-none mb-4">
                     {product.price.toFixed(2).replace(".", ",")}
                   </span>
-                  <button className="bg-[#0B1A8E] flex items-center justify-center gap-2 text-white px-4 py-2 rounded font-bold text-xl w-full">
+                  <button
+                    className="bg-[#0B1A8E] flex items-center justify-center gap-2 text-white px-4 py-2 rounded font-bold text-xl w-full cursor-pointer"
+                    onClick={addToCart}
+                  >
                     <img
                       src={CartImage}
                       alt="Carrinho"
